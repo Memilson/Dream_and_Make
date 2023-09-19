@@ -1,6 +1,8 @@
 # Dream and Make - Artistic Inspiration Platform
 
 ![Dream and Make Logo](https://github.com/Memilson/Dream_and_Make/assets/125493751/7e5db968-2ff1-4507-8615-5464b9e471e3)
+>[⚠️Note]
+>This project is unstable and being worked on
 
 **Welcome to Dream and Make, where art comes to life!**
 
