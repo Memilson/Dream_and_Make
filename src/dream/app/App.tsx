@@ -1,15 +1,18 @@
 import React from 'react';
-import { RouterProvider } from './providers/RouterProvider';
-import { ThemeProvider } from './providers/ThemeProvider';
-import { MainLayout } from './layout/MainLayout';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AppRoutes from '../routes';
+import '../../dream/theme.css';
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider>
-      <MainLayout>
-        <RouterProvider />
-      </MainLayout>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

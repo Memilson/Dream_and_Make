@@ -1,13 +1,19 @@
 import React from 'react';
-import { Link } from '../../../shared/components/Link';
-import './styles.css'; // Assuming you have some styles for the home page
+import CardDream from '../../components/CardDream';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
     return (
-        <div className="home">
-            <h1>Welcome to Our SPA</h1>
-            <p>This is the landing page of our application.</p>
-            <Link to="/about">Learn more about us</Link>
+        <div className="center" style={{ minHeight: '60vh', padding: 24 }}>
+            <CardDream style={{ maxWidth: 900, width: '100%', textAlign: 'center' }}>
+                <h1>Bem-Vindo(a) ao Dream and Make</h1>
+                <p style={{ color: 'var(--muted)', marginTop: 8 }}>
+                    Descubra, compartilhe e celebre a criatividade da comunidade.
+                </p>
+                <div style={{ marginTop: 16 }}>
+                    <Link to="/regras"><button>Veja as Regras</button></Link>
+                </div>
+            </CardDream>
         </div>
     );
 };

@@ -1,0 +1,57 @@
+/* Global theme variables and resets for Dream and Make */
+:root {
+  --bg: #1a1a1a;
+  --header: #121212;
+  --primary: #72B48F;
+  --primary-hover: #61A57E;
+  --text: #e8e8e8;
+  --muted: #b5b5b5;
+
+  --radius: 12px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.3);
+  --transition: all 0.25s ease;
+
+  --font: "Helvetica Neue", Inter, system-ui, sans-serif;
+}
+
+/* Reset + base */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+html, body, h1, h2, h3, h4, h5, h6, p, ul { margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.5; }
+
+a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+a:hover, a:focus { color: var(--primary-hover); outline: none; }
+
+button { cursor: pointer; border: 0; border-radius: 8px; background: var(--primary); color: #111; padding: 10px 16px; transition: var(--transition); }
+button:hover, button:focus { background: var(--primary-hover); filter: brightness(1.05); }
+
+/* Fixed header */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--header); border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: saturate(120%) blur(6px);
+}
+.header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; }
+.logo { font-weight: 700; letter-spacing: 0.2px; color: var(--text); }
+.nav { display: flex; gap: 16px; flex-wrap: wrap; }
+.nav a { position: relative; color: var(--text); padding: 6px 8px; }
+.nav a::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 2px; height: 2px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+.nav a:hover::after, .nav a:focus::after, .nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+/* Page shell */
+.page-shell { padding-top: 64px; min-height: 100%; }
+.page-container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+.tagline { color: var(--muted); font-size: 0.95rem; margin: 8px 0 20px; opacity: 0.9; }
+
+/* CardDream base */
+.card-dream { background: rgba(39,39,39,0.85); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; transition: var(--transition); }
+.card-dream:hover { transform: translateY(-1px); filter: brightness(1.02); }
+
+/* Utilities */
+.center { display: grid; place-items: center; }
+.grid-auto-fit { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+
+/* Accessible modal overlay */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: grid; place-items: center; z-index: 100; }
+.modal-content { background: #1f1f1f; border-radius: var(--radius); max-width: 90vw; max-height: 90vh; overflow: auto; box-shadow: var(--shadow); }
