@@ -589,3 +589,32 @@ ul {
 .skeleton-line.sm { height: 10px; }
 
 @keyframes shimmer { to { transform: translateX(100%); } }
+
+/* Carousel */
+.carousel { position: relative; width: 100%; }
+.carousel .viewport { position: relative; width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid var(--outline); background: rgba(255,255,255,0.03); }
+.carousel .viewport.ratio-16x9 { aspect-ratio: 16/9; }
+.carousel .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 400ms ease; }
+.carousel .slide.is-active { opacity: 1; }
+.carousel .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.carousel .overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55)); color: #fff; padding: 18px; }
+.carousel .caption { display: inline-flex; gap: 8px; align-items: center; background: rgba(0,0,0,0.35); padding: 6px 10px; border-radius: 10px; font-weight: 600; border: 1px solid rgba(255,255,255,0.12); }
+.carousel .nav { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; pointer-events: none; }
+.carousel .nav button { pointer-events: auto; width: 40px; height: 40px; border-radius: 999px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(255,255,255,0.18); display: grid; place-items: center; transition: var(--transition); }
+.carousel .nav button:hover { background: rgba(0,0,0,0.6); transform: translateY(-1px); }
+
+/* Masonry feed */
+.masonry { column-gap: 16px; }
+.masonry-col-1 { column-count: 1; }
+.masonry-col-2 { column-count: 2; }
+.masonry-col-3 { column-count: 3; }
+.masonry-col-4 { column-count: 4; }
+.masonry-item { break-inside: avoid; margin: 0 0 16px; position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--outline); background: rgba(255,255,255,0.03); }
+.masonry-item img { width: 100%; height: auto; display: block; transition: transform .4s ease, opacity .4s ease; }
+.masonry-item:hover img { transform: scale(1.02); opacity: 0.92; }
+.masonry-overlay { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px; color: #fff; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%); opacity: 0; transition: opacity .25s ease; display: flex; align-items: center; gap: 8px; }
+.masonry-item:hover .masonry-overlay { opacity: 1; }
+
+/* Motion utils */
+.fade-in { animation: fadeIn 360ms ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }

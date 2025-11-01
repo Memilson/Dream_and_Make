@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type TabItem<T extends string> = { id: T; label: string; icon?: React.ComponentType<{ className?: string; ariaHidden?: boolean }> };
+export type TabItem<T extends string> = { id: T; label: string; icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> };
 
 export function Tabs<T extends string>({
   items,
@@ -27,7 +27,7 @@ export function Tabs<T extends string>({
             className={`dm-button ${active === it.id ? '' : 'dm-button--ghost'}`.trim()}
             onClick={() => onChange(it.id)}
           >
-            {Icon ? <Icon className="tab-icon" ariaHidden /> : null}
+            {Icon ? <Icon className="tab-icon" aria-hidden /> : null}
             <span>{it.label}</span>
           </button>
         );

@@ -1,6 +1,7 @@
 import React from 'react';
 import CardDream from '../../components/CardDream';
 import { Link } from 'react-router-dom';
+import Carousel from '../../shared/components/Carousel';
 
 const highlights = [
     {
@@ -37,7 +38,10 @@ const Home: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Card removido a pedido do usuário */}
+                {/* Novo carrossel de destaques */}
+                <div className="home-hero__card">
+                    <Carousel />
+                </div>
             </section>
 
             <section className="home-grid">
