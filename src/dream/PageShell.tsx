@@ -2,38 +2,30 @@ import React from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 
 // Navegação principal simplificada: Explorar | Criar | Comunidade | Sobre
-const navGroups = [
+type NavChild = { to: string; label: string };
+type NavGroup = { to: string; label: string; children: NavChild[] };
+const navGroups: NavGroup[] = [
   {
     to: '/explorar',
     label: 'Explorar',
-    children: [
-      { to: '/explorar?tab=galeria', label: 'Galeria' },
-      { to: '/explorar?tab=musicas', label: 'Músicas' },
-    ],
+    children: [],
   },
   {
     to: '/criar',
     label: 'Criar',
-    children: [
-      { to: '/criar/enviar', label: 'Enviar' },
-    ],
+    children: [],
   },
   {
     to: '/comunidade',
     label: 'Comunidade',
-    children: [
-      { to: '/comunidade?tab=ajuda', label: 'Ajuda' },
-      { to: '/comunidade?tab=regras', label: 'Regras' },
-    ],
+    children: [],
   },
   {
     to: '/sobre',
     label: 'Sobre',
-    children: [
-      { to: '/sobre', label: 'Origem' },
-    ],
+    children: [],
   },
-] as const;
+];
 
 export const PageShell: React.FC = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -67,21 +59,23 @@ export const PageShell: React.FC = () => {
           >
             {navGroups.map((group) => (
               <div className="nav-item" key={group.to}>
-                <NavLink className="nav-link" to={group.to} onClick={handleNavigate} aria-haspopup="true">
+                <NavLink className="nav-link" to={group.to} onClick={handleNavigate} aria-haspopup={group.children.length > 0 || undefined}>
                   {group.label}
                 </NavLink>
-                <div className="submenu" role="menu">
-                  {group.children.map((child) => (
-                    <NavLink
-                      key={child.to}
-                      to={child.to}
-                      onClick={handleNavigate}
-                      role="menuitem"
-                    >
-                      {child.label}
-                    </NavLink>
-                  ))}
-                </div>
+                {group.children.length > 0 && (
+                  <div className="submenu" role="menu">
+                    {group.children.map((child) => (
+                      <NavLink
+                        key={child.to}
+                        to={child.to}
+                        onClick={handleNavigate}
+                        role="menuitem"
+                      >
+                        {child.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </nav>

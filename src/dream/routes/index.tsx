@@ -39,15 +39,11 @@ const AppRoutes: React.FC = () => {
                         <Route path="origem" element={<Sobre />} />
                     </Route>
 
-                    {/* Redirects from legacy paths */}
-                    <Route path="galeria" element={<Navigate to="/explorar?tab=galeria" replace />} />
-                    <Route path="musicas" element={<Navigate to="/explorar?tab=musicas" replace />} />
+                    {/* Redirects from legacy paths (somente os essenciais) */}
                     <Route path="envie" element={<Navigate to="/criar/enviar" replace />} />
                     <Route path="crie-voce" element={<Navigate to="/criar" replace />} />
                     <Route path="core-values" element={<Navigate to="/sobre" replace />} />
-                    <Route path="ajuda" element={<Navigate to="/comunidade?tab=ajuda" replace />} />
-                    <Route path="regras" element={<Navigate to="/comunidade?tab=regras" replace />} />
-                    <Route path="faq" element={<Navigate to="/comunidade/ajuda" replace />} />
+                    <Route path="faq" element={<Navigate to="/comunidade?tab=ajuda" replace />} />
                     <Route path="changelog" element={<Navigate to="/sobre" replace />} />
 
                     <Route path="home" element={<Navigate to="/" replace />} />
