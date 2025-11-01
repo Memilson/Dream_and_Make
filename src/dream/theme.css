@@ -435,6 +435,11 @@ ul {
   gap: 6px;
 }
 
+/* Enhanced lists for pages */
+.list { list-style: none; padding-left: 0; margin: 0; display: grid; gap: 8px; }
+.list--values li { display: flex; align-items: flex-start; gap: 10px; color: var(--muted); }
+.list--values .li-icon { width: 18px; height: 18px; color: var(--primary); margin-top: 2px; flex: 0 0 auto; }
+
 /* Accessible modal overlay */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: grid; place-items: center; z-index: 100; }
 .modal-content { background: #1f1f1f; border-radius: var(--radius); max-width: 90vw; max-height: 90vh; overflow: auto; box-shadow: var(--shadow); }
@@ -508,6 +513,35 @@ ul {
 .justify-center { justify-content: center; }
 .max-w-700 { max-width: 700px; }
 .max-w-900 { max-width: 900px; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: var(--muted); font-size: 0.85rem; }
+
+/* Forms */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid .full { grid-column: 1 / -1; }
+.form-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
+.dm-input, .dm-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  outline: none;
+  transition: var(--transition);
+}
+.dm-input:focus, .dm-textarea:focus { border-color: rgba(114, 180, 143, 0.6); box-shadow: 0 0 0 3px rgba(114, 180, 143, 0.15); }
+.dm-input::placeholder, .dm-textarea::placeholder { color: rgba(255,255,255,0.4); }
+
+@media (max-width: 720px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
 
 /* Tabs */
 .tablist { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tab-icon { width: 16px; height: 16px; }
+
+/* FAQ styles */
+.faq-list { display: grid; gap: 12px; }
+.faq-q { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.faq-a { color: var(--muted); margin-top: 6px; }

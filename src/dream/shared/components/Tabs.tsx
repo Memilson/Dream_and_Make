@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type TabItem<T extends string> = { id: T; label: string };
+export type TabItem<T extends string> = { id: T; label: string; icon?: React.ComponentType<{ className?: string; ariaHidden?: boolean }> };
 
 export function Tabs<T extends string>({
   items,
@@ -17,17 +17,21 @@ export function Tabs<T extends string>({
 }) {
   return (
     <div role="tablist" aria-label={ariaLabel} className={`tablist ${className}`.trim()}>
-      {items.map((it) => (
-        <button
-          key={it.id}
-          role="tab"
-          aria-selected={active === it.id}
-          className={`dm-button ${active === it.id ? '' : 'dm-button--ghost'}`.trim()}
-          onClick={() => onChange(it.id)}
-        >
-          {it.label}
-        </button>
-      ))}
+      {items.map((it) => {
+        const Icon = it.icon;
+        return (
+          <button
+            key={it.id}
+            role="tab"
+            aria-selected={active === it.id}
+            className={`dm-button ${active === it.id ? '' : 'dm-button--ghost'}`.trim()}
+            onClick={() => onChange(it.id)}
+          >
+            {Icon ? <Icon className="tab-icon" ariaHidden /> : null}
+            <span>{it.label}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }
