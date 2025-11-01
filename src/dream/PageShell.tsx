@@ -7,8 +7,8 @@ const navGroups = [
     to: '/explorar',
     label: 'Explorar',
     children: [
-      { to: '/explorar/galeria', label: 'Galeria' },
-      { to: '/explorar/musicas', label: 'Músicas' },
+      { to: '/explorar?tab=galeria', label: 'Galeria' },
+      { to: '/explorar?tab=musicas', label: 'Músicas' },
     ],
   },
   {
@@ -22,8 +22,8 @@ const navGroups = [
     to: '/comunidade',
     label: 'Comunidade',
     children: [
-      { to: '/comunidade/ajuda', label: 'Ajuda' },
-      { to: '/comunidade/regras', label: 'Regras' },
+      { to: '/comunidade?tab=ajuda', label: 'Ajuda' },
+      { to: '/comunidade?tab=regras', label: 'Regras' },
     ],
   },
   {
@@ -46,7 +46,7 @@ export const PageShell: React.FC = () => {
       <header className="site-header" role="banner">
         <div className="header-inner">
           <NavLink to="/" className="logo">
-            <span className="logo-mark" aria-hidden>◆</span>
+            <img src="/styles/logo.svg" className="logo-img" alt="" aria-hidden />
             Dream and Make
           </NavLink>
           <button
