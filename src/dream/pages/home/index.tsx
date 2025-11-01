@@ -5,19 +5,19 @@ import Carousel from '../../shared/components/Carousel';
 
 const highlights = [
     {
-        title: 'Experiências Imersivas',
-        description: 'Explore galerias de arte, playlists sonoras e histórias que conectam artistas e comunidade.',
+        title: 'Experiências imersivas',
+        description: 'Passe por galerias, playlists e histórias. De artista para artista, sem pressa.',
         action: { href: '/explorar', label: 'Explorar agora' }
     },
     {
-        title: 'Compartilhe Seu Universo',
-        description: 'Envie suas criações, receba feedback acolhedor e contribua para uma vitrine colaborativa.',
-    action: { href: '/criar?tab=enviar', label: 'Enviar arte' }
+        title: 'Compartilhe seu universo',
+        description: 'Envie suas criações, receba feedback gentil e faça parte de uma vitrine colaborativa.',
+        action: { href: '/criar?tab=enviar', label: 'Enviar arte' }
     },
     {
-        title: 'Aprenda com a Comunidade',
-        description: 'Acesse dicas criativas, guias e valores que reforçam um ambiente gentil e seguro.',
-        action: { href: '/sobre', label: 'Conheça os valores' }
+        title: 'Aprenda com a comunidade',
+        description: 'Encontre dicas, guias e valores que mantêm este espaço seguro e acolhedor.',
+        action: { href: '/sobre', label: 'Conheça nossos valores' }
     }
 ];
 
@@ -26,15 +26,14 @@ const Home: React.FC = () => {
         <div className="home">
             <section className="home-hero">
                 <div className="home-hero__text">
-                    <span className="eyebrow">Comunidade Criativa</span>
-                    <h2>Bem-vindo(a) ao Dream and Make</h2>
-                    <p>
-                        Descubra, compartilhe e celebre a criatividade que pulsa em nossa comunidade. Aqui você encontra um
-                        espaço acolhedor, com curadoria cuidadosa e experiências feitas para inspirar.
+                    <span className="eyebrow">Arte que pulsa, vozes em destaque</span>
+                    <h1 className="page-title">Dream and Make</h1>
+                    <p className="tagline">
+                        Um espaço para descobrir talentos, apoiar artistas e compartilhar o que te move.
                     </p>
                     <div className="home-hero__actions">
                         <Link className="dm-button" to="/explorar">Começar a explorar</Link>
-                        <Link className="dm-button dm-button--ghost" to="/comunidade?tab=regras">Regras da comunidade</Link>
+                        <Link className="dm-button dm-button--ghost" to="/comunidade?tab=regras">Regras da casa</Link>
                     </div>
                 </div>
 
@@ -58,10 +57,10 @@ const Home: React.FC = () => {
 
             <section className="home-cta">
                 <CardDream>
-                    <h2>Compartilhe seus sonhos com o mundo</h2>
+                    <h2>Mostre seus sonhos ao mundo</h2>
                     <p>
-                        Publique suas obras, inspire outras pessoas e acompanhe as novidades da plataforma. Nosso time segue
-                        aprimorando a experiência para você criar com tranquilidade.
+                        Publique suas obras, inspire outras pessoas e acompanhe as novidades da plataforma. A gente segue
+                        lapidando a experiência para você criar com tranquilidade.
                     </p>
                     <div className="home-hero__actions mt-20 justify-center">
                         <Link className="dm-button" to="/criar?tab=enviar">Envie sua arte</Link>

@@ -57,14 +57,6 @@ export const PageShell: React.FC = () => {
       </header>
 
       <main className="app-main">
-        <div className="page-intro">
-          <p className="eyebrow">Celebrando a Arte, Elevando Vozes</p>
-          <h1 className="page-title">Dream and Make</h1>
-          <p className="tagline">
-            Uma experiência criativa para descobrir talentos, apoiar artistas e compartilhar o que te inspira.
-          </p>
-        </div>
-
         <div className="page-content">
           <Outlet />
         </div>
