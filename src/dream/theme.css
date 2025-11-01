@@ -1,11 +1,14 @@
 /* Global theme variables and resets for Dream and Make */
 :root {
   color-scheme: dark;
-  --bg: #0f1115;
+  --bg: #0d1117; /* slightly deeper, closer to requested tone */
   --header: rgba(12, 14, 18, 0.88);
-  --primary: #7BD6A3;
+  --primary: #7BD6A3; /* brand accent */
   --primary-hover: #5ec48c;
-  --text: #f4f5f6;
+  --cta: #22C55E;          /* vibrant action green */
+  --cta-hover: #15803D;    /* darker hover state */
+  --focus: #22C55E;        /* accessible focus ring */
+  --text: #F3F4F6;         /* off-white for OLED comfort */
   --muted: #a8b0bb;
   --surface: rgba(22, 25, 31, 0.9);
   --surface-strong: rgba(14, 17, 23, 0.92);
@@ -16,6 +19,23 @@
   --transition: all 0.28s ease-in-out;
 
   --font: 'Inter', 'Helvetica Neue', system-ui, sans-serif;
+
+  /* Background accents (minimal, subtle) */
+  --bg-accent: rgba(123, 214, 163, 0.08);
+  --bg-spot: rgba(123, 214, 163, 0.12);
+  --bg-grid: rgba(255, 255, 255, 0.04);
+
+  /* Decorative strength toggle (1 = default, 0.6 = low) */
+  --bg-decor-strength: 1;
+
+  /* Typo scale */
+  --title-min: 2.25rem; /* 36px */
+  --title-max: 2.625rem; /* 42px */
+  --copy-lh: 1.75;
+  --copy-max: 65ch;
+
+  /* Eyebrow accent */
+  --eyebrow: #9AE6B4; /* desaturated green for category labels */
 }
 
 :root[data-theme='light'] {
@@ -24,12 +44,20 @@
   --header: rgba(255, 255, 255, 0.85);
   --primary: #2f8f5b;
   --primary-hover: #1f7446;
+  --cta: #22C55E;
+  --cta-hover: #15803D;
+  --focus: #22C55E;
   --text: #1a1d21;
   --muted: #667085;
   --surface: rgba(255, 255, 255, 0.9);
   --surface-strong: rgba(255, 255, 255, 0.96);
   --outline: rgba(47, 143, 91, 0.16);
   --shadow: 0 20px 60px rgba(15, 18, 22, 0.12);
+
+  /* Light mode background accents tuned down */
+  --bg-accent: rgba(47, 143, 91, 0.06);
+  --bg-spot: rgba(47, 143, 91, 0.10);
+  --bg-grid: rgba(0, 0, 0, 0.06);
 }
 
 /* Reset + base */
@@ -37,14 +65,18 @@
 html, body, #root { height: 100%; }
 html, body, h1, h2, h3, h4, h5, h6, p, ul { margin: 0; padding: 0; }
 body {
+  /* Minimal, elegant background */
   background:
-    radial-gradient(circle at 18% 20%, rgba(123, 214, 163, 0.16), transparent 55%),
-    radial-gradient(circle at 78% 4%, rgba(123, 214, 163, 0.12), transparent 50%),
+    radial-gradient(1200px 800px at 20% 10%, var(--bg-spot), transparent 60%),
+    radial-gradient(900px 600px at 85% -10%, var(--bg-accent), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)),
     var(--bg);
   color: var(--text);
   font-family: var(--font);
-  line-height: 1.6;
+  line-height: 1.65;
+  font-size: clamp(15px, 1.05vw, 17px);
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
 
 a { color: inherit; text-decoration: none; transition: var(--transition); }
@@ -66,7 +98,7 @@ button { cursor: pointer; border: 0; font: inherit; }
   position: absolute;
   border-radius: 999px;
   filter: blur(80px);
-  opacity: 0.35;
+  opacity: 0.24;
   z-index: 0;
 }
 
@@ -75,7 +107,8 @@ button { cursor: pointer; border: 0; font: inherit; }
   right: -120px;
   width: 320px;
   height: 320px;
-  background: rgba(114, 180, 143, 0.35);
+  background: var(--bg-accent);
+  animation: float-a 28s ease-in-out infinite;
 }
 
 .dream-app::after {
@@ -83,10 +116,156 @@ button { cursor: pointer; border: 0; font: inherit; }
   left: -100px;
   width: 260px;
   height: 260px;
-  background: rgba(114, 180, 143, 0.25);
+  background: var(--bg-accent);
+  animation: float-b 34s ease-in-out infinite;
 }
 
 .dream-app > * { position: relative; z-index: 1; }
+
+/* Ultra-light grain + grid overlay (fixed, behind content) */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Grain (SVG fractal noise), extremely subtle */
+body::before {
+  opacity: calc(0.06 * var(--bg-decor-strength));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  mix-blend-mode: soft-light;
+}
+
+/* Soft grid/vignette combo to add depth without clutter */
+body::after {
+  background:
+    radial-gradient(1200px 800px at 50% -20%, rgba(0,0,0,0.12), transparent 60%),
+    linear-gradient(0deg, transparent 0 49%, var(--bg-grid) 49% 51%, transparent 51%),
+    linear-gradient(90deg, transparent 0 49%, var(--bg-grid) 49% 51%, transparent 51%);
+  background-size: auto, 44px 44px, 44px 44px;
+  opacity: calc(0.08 * var(--bg-decor-strength));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dream-app::before,
+  .dream-app::after { animation: none !important; }
+}
+
+@keyframes float-a {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(14px, -20px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes float-b {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-16px, 18px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Focus styles for accessibility */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Typography hierarchy */
+.eyebrow {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--eyebrow);
+  font-weight: 600;
+}
+
+.page-title {
+  font-size: clamp(var(--title-min), 3vw + 1rem, var(--title-max));
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 1rem; /* 16px base; adapts with body clamp */
+  line-height: var(--copy-lh);
+  max-width: var(--copy-max);
+  margin-top: 1.5rem; /* increased breathing room */
+}
+
+/* Layout widths and rhythm */
+.app-main {
+  width: min(1200px, 100%);
+  gap: 40px; /* slightly increased from 32px */
+}
+
+.page-content { gap: 36px; }
+.home { gap: 40px; }
+
+/* Button system */
+.dm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: var(--cta);
+  background: linear-gradient(135deg, var(--cta) 0%, color-mix(in oklab, var(--cta), black 6%) 100%);
+  color: #07130c;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: all 150ms ease-in-out;
+  box-shadow: 0 12px 24px rgba(9, 11, 15, 0.35);
+}
+
+.dm-button:hover,
+.dm-button:focus-visible {
+  transform: translateY(-2px);
+  background: var(--cta-hover);
+  background: linear-gradient(135deg, var(--cta-hover) 0%, color-mix(in oklab, var(--cta-hover), black 8%) 100%);
+  box-shadow: 0 16px 32px rgba(9, 11, 15, 0.45);
+}
+
+.dm-button--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: none;
+}
+
+.dm-button--ghost:hover,
+.dm-button--ghost:focus-visible {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+}
+
+/* Button row utility */
+.button-row { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* Text shield to ensure legibility over imagery */
+.text-shield {
+  background: rgba(8, 10, 14, 0.35);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+/*
+  Intensity toggle (optional):
+  Add data attribute to <html> or <body> to reduce decorative overlays:
+  <html data-bg-decor="low"> ...
+*/
+[data-bg-decor="low"] { --bg-decor-strength: 0.6; }
 
 /* Header */
 .site-header {
