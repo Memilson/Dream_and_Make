@@ -597,9 +597,43 @@ ul {
 .carousel .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 400ms ease; }
 .carousel .slide.is-active { opacity: 1; }
 .carousel .slide { display: grid; place-items: center; }
-.carousel .slide img { height: 100%; width: auto; object-fit: contain; object-position: center center; display: block; background: rgba(0,0,0,0.25); }
-.carousel .overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55)); color: #fff; padding: 18px; }
-.carousel .caption { display: inline-flex; gap: 8px; align-items: center; background: rgba(0,0,0,0.35); padding: 6px 10px; border-radius: 10px; font-weight: 600; border: 1px solid rgba(255,255,255,0.12); }
+/* Use a background layer to avoid internal letterbox seams */
+.carousel .media { position: absolute; inset: 0; background-position: center; background-repeat: no-repeat; background-size: contain; background-color: rgba(0,0,0,0.28); }
+.carousel .overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  border-radius: inherit;
+  pointer-events: none;
+  /* Full-image soft vignette + stronger fade at the bottom for legibility */
+  background:
+    radial-gradient(120% 80% at 50% 20%, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.05) 55%, rgba(0,0,0,0.00) 70%),
+    linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.65) 100%);
+  color: #fff;
+  padding: clamp(12px, 1.8vw, 20px);
+  z-index: 1;
+}
+.carousel .caption {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+}
+.carousel .meta { pointer-events: none; display: grid; gap: 6px; padding: 10px 14px; border-radius: 14px; background: rgba(0,0,0,0.45); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 10px 24px rgba(0,0,0,0.35); max-width: min(85%, 460px); }
+.carousel .meta-title { font-weight: 800; font-size: clamp(1.05rem, 1.4vw + 0.7rem, 1.4rem); line-height: 1.15; letter-spacing: .01em; }
+.carousel .meta-sub { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.9); font-weight: 600; font-size: 0.95rem; }
+.carousel .indicators { position: absolute; right: clamp(10px,1.6vw,16px); bottom: clamp(10px,1.6vw,16px); display: inline-flex; gap: 6px; z-index: 2; }
+.carousel .dot { width: 10px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.22); transition: width .25s ease, background .25s ease, opacity .25s ease; opacity: .9; }
+.carousel .dot.is-active { width: 22px; background: var(--primary); border-color: rgba(255,255,255,0.6); }
 .carousel .nav { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; pointer-events: none; }
 .carousel .nav button { pointer-events: auto; width: 40px; height: 40px; border-radius: 999px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(255,255,255,0.18); display: grid; place-items: center; transition: var(--transition); }
 .carousel .nav button:hover { background: rgba(0,0,0,0.6); transform: translateY(-1px); }

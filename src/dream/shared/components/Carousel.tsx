@@ -12,6 +12,7 @@ interface CarouselProps {
   maxHeight?: number; // px
   minHeight?: number; // px
   maxWidth?: number;  // px
+  showIndicators?: boolean;
 }
 
 const Carousel: React.FC<CarouselProps> = ({
@@ -20,7 +21,8 @@ const Carousel: React.FC<CarouselProps> = ({
   count = 5,
   maxHeight = 520,
   minHeight = 260,
-  maxWidth = 560,
+  maxWidth = 640,
+  showIndicators = true,
 }) => {
   const { data: fetched = [], isLoading, isError } = useQuery({
     queryKey: ['carousel-images', count],
@@ -36,7 +38,7 @@ const Carousel: React.FC<CarouselProps> = ({
   const images = (isError || fetched.length === 0) ? placeholderImages.slice(0, count) : fetched;
 
   const [idx, setIdx] = React.useState(0);
-  const [dims, setDims] = React.useState<Record<number, { w: number; h: number }>>({});
+  // (kept simple) no need to measure natural dimensions when using CSS background contain
   const total = images.length;
 
   // auto-advance
@@ -49,8 +51,18 @@ const Carousel: React.FC<CarouselProps> = ({
   const prev = () => setIdx((i) => (i - 1 + total) % total);
   const next = () => setIdx((i) => (i + 1) % total);
 
+  const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowLeft') { prev(); }
+    if (e.key === 'ArrowRight') { next(); }
+  };
+
   return (
-    <div className={`carousel ${className}`.trim()} aria-roledescription="carousel">
+    <div
+      className={`carousel ${className}`.trim()}
+      aria-roledescription="carousel"
+      tabIndex={0}
+      onKeyDown={handleKey}
+    >
       <div
         className="viewport"
         style={{
@@ -63,16 +75,17 @@ const Carousel: React.FC<CarouselProps> = ({
         {(isLoading && !images.length) && <div className="skeleton" style={{ width: '100%', height: '100%' }} />}
         {images.map((img, i) => (
           <figure key={img.id} className={`slide ${i === idx ? 'is-active' : ''}`.trim()} aria-hidden={i !== idx}>
-            <img
-              src={img.image_url}
-              alt={img.image_name || img.title || 'Imagem'}
-              onLoad={(e) => {
-                const el = e.currentTarget;
-                setDims((d) => ({ ...d, [i]: { w: el.naturalWidth || 1, h: el.naturalHeight || 1 } }));
-              }}
+            <div
+              className="media"
+              role="img"
+              aria-label={(img.image_name || img.title || 'Imagem')}
+              style={{ backgroundImage: `url(${img.image_url})` }}
             />
             <figcaption className="overlay">
-              <span className="caption"><User className="tab-icon" aria-hidden />{img.author}</span>
+              <div className="meta">
+                <div className="meta-title">{img.title || img.image_name}</div>
+                <div className="meta-sub"><User className="tab-icon" aria-hidden />{img.author}</div>
+              </div>
             </figcaption>
           </figure>
         ))}
@@ -80,6 +93,21 @@ const Carousel: React.FC<CarouselProps> = ({
           <div className="nav" aria-hidden>
             <button type="button" onClick={prev} aria-label="Anterior"><ChevronLeft size={18} aria-hidden /></button>
             <button type="button" onClick={next} aria-label="Próximo"><ChevronRight size={18} aria-hidden /></button>
+          </div>
+        )}
+        {showIndicators && total > 1 && (
+          <div className="indicators" role="tablist" aria-label="Slides">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === idx}
+                aria-label={`Ir para slide ${i + 1}`}
+                className={`dot ${i === idx ? 'is-active' : ''}`.trim()}
+                onClick={() => setIdx(i)}
+              />
+            ))}
           </div>
         )}
       </div>
