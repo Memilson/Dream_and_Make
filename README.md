@@ -1,27 +1,51 @@
-# Dream and Make - Artistic Inspiration Platform
+# Dream SPA
 
-![Dream and Make Logo](https://github.com/Memilson/Dream_and_Make/assets/125493751/7e5db968-2ff1-4507-8615-5464b9e471e3)
->[⚠️Note]
->This project is unstable and being worked on
+This is a Single Page Application (SPA) built with TypeScript and React using Vite. The project is structured to follow a feature-based architecture, which helps in organizing the codebase efficiently and avoiding repetition of styles and structure.
 
-**Welcome to Dream and Make, where art comes to life!**
+## Project Structure
 
-Dream and Make is a creative platform born during the Internal Robotics Tournament (T.I.R). Dive into the world of art, explore random artists, view their inspiring creations, and express yourself. Whether it's captivating images or soul-soothing music, we celebrate diverse art forms that elevate voices and stir emotions.
+The project is organized into several key directories:
 
-# Project Overview
+- **src/dream/app**: Contains the main application components, including routing and layout.
+- **src/dream/routes**: Defines the application's routes and guards for authentication.
+- **src/dream/pages**: Contains the different pages of the application, such as Home, About, and Not Found.
+- **src/dream/features**: Contains feature-specific components, hooks, and services, such as authentication and todos.
+- **src/dream/shared**: Contains shared components, hooks, utilities, and styles that can be reused across the application.
+- **src/dream/widgets**: Contains widget components like navigation and footer.
 
-![Project Screenshot](https://github.com/Memilson/Dream_and_Make/assets/125493751/57f687d2-d969-45f5-8436-7018de66d4b7)
+## Getting Started
 
-**About the Project:**
+To get started with the project, follow these steps:
 
-This repository is dedicated to showcasing and promoting my brainchild—Dream and Make. Created to empower emerging artists, this platform is your gateway to artistic discovery. Here, you'll find insights into the project's vision, its purpose, and the impact it's making.
+1. **Clone the repository**:
+   ```
+   git clone <repository-url>
+   cd dream-spa
+   ```
 
-While the source code isn't available, I'm more than happy to share the journey, inspirations, and the heart behind the project. Explore, experience, and reach out to connect, collaborate, or simply appreciate the world of art.
+2. **Install dependencies**:
+   ```
+   npm install
+   ```
 
-**Celebrating art, elevating voices.**
+3. **Run the application**:
+   ```
+   npm run dev
+   ```
 
-![Artistic Inspiration](https://github.com/Memilson/Dream_and_Make/assets/125493751/ee624132-0a82-4979-be5a-67f3cff9ae6c)
+4. **Open your browser** and navigate to `http://localhost:3000` to see the application in action.
 
-Project Videos **https://drive.google.com/drive/folders/1ZesLu3GrxG2JTxXNrzWNs0tHN02oZP10**
+## Features
 
+- **Theming**: The application supports theming through a centralized theme provider.
+- **Routing**: Utilizes React Router for navigation between different pages.
+- **Authentication**: Includes authentication features with a login form and protected routes.
+- **Todo Management**: Provides functionality to manage todos.
 
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue for any suggestions or improvements.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
