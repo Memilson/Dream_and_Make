@@ -1,113 +1,136 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { get } from '../../api/http';
-import { ImageSchema } from '../../api/types';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ArtistBadge from './ArtistBadge';
+import { useCarousel, type UseCarouselOptions } from '../hooks/useCarousel';
+import { getSafeImageUrl } from '../../utils';
 import { placeholderImages } from '../../api/placeholders';
-import { ChevronLeft, ChevronRight, User } from 'lucide-react';
 
-interface CarouselProps {
-  autoMs?: number;
+interface CarouselProps extends UseCarouselOptions {
   className?: string;
-  count?: number; // how many images to load
-  maxHeight?: number; // px
-  minHeight?: number; // px
-  maxWidth?: number;  // px
   showIndicators?: boolean;
+  ariaLabel?: string;
 }
 
 const Carousel: React.FC<CarouselProps> = ({
-  autoMs = 4500,
+  autoMs,
   className = '',
-  count = 5,
-  maxHeight = 520,
-  minHeight = 260,
-  maxWidth = 640,
+  count,
   showIndicators = true,
+  ariaLabel = 'Carrossel de destaques',
 }) => {
-  const { data: fetched = [], isLoading, isError } = useQuery({
-    queryKey: ['carousel-images', count],
-    queryFn: async () => {
-      // Use local seed images for hero carousel
-      const list = await get(`/images`, ImageSchema.array());
-      // limit to requested count if provided
-      if (count && list.length > count) return list.slice(0, count);
-      return list;
-    },
-    retry: false,
-  });
-  const images = (isError || fetched.length === 0) ? placeholderImages.slice(0, count) : fetched;
+  const {
+    items,
+    currentIndex,
+    progress,
+    isLoading,
+    isError,
+    next,
+    prev,
+    goTo,
+    pause,
+    resume,
+  } = useCarousel({ autoMs, count });
 
-  const [idx, setIdx] = React.useState(0);
-  // (kept simple) no need to measure natural dimensions when using CSS background contain
-  const total = images.length;
+  const total = items.length;
 
-  // auto-advance
-  React.useEffect(() => {
-    if (!total) return;
-    const id = setInterval(() => setIdx((i) => (i + 1) % total), autoMs);
-    return () => clearInterval(id);
-  }, [autoMs, total]);
-
-  const prev = () => setIdx((i) => (i - 1 + total) % total);
-  const next = () => setIdx((i) => (i + 1) % total);
-
-  const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'ArrowLeft') { prev(); }
-    if (e.key === 'ArrowRight') { next(); }
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      prev();
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      next();
+    }
   };
 
   return (
-    <div
-      className={`carousel ${className}`.trim()}
-      aria-roledescription="carousel"
-      tabIndex={0}
-      onKeyDown={handleKey}
-    >
+    <div className={`carousel ${className}`.trim()} data-state={isLoading ? 'loading' : isError ? 'error' : 'ready'}>
       <div
-        className="viewport"
-        style={{
-          height: `clamp(${minHeight}px, 45vh, ${maxHeight}px)`,
-          maxWidth: `${maxWidth}px`,
-          width: '100%',
-          marginInline: 'auto',
-        }}
+        className="carousel__viewport"
+        role="group"
+        aria-roledescription="carousel"
+        aria-label={ariaLabel}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        onPointerEnter={pause}
+        onPointerLeave={resume}
+        onFocus={pause}
+        onBlur={resume}
       >
-        {(isLoading && !images.length) && <div className="skeleton" style={{ width: '100%', height: '100%' }} />}
-        {images.map((img, i) => (
-          <figure key={img.id} className={`slide ${i === idx ? 'is-active' : ''}`.trim()} aria-hidden={i !== idx}>
-            <div
-              className="media"
-              role="img"
-              aria-label={(img.image_name || img.title || 'Imagem')}
-              style={{ backgroundImage: `url(${img.image_url})` }}
-            />
-            <figcaption className="overlay">
-              <div className="meta">
-                <div className="meta-title">{img.title || img.image_name}</div>
-                <div className="meta-sub"><User className="tab-icon" aria-hidden />{img.author}</div>
-              </div>
-            </figcaption>
-          </figure>
-        ))}
-        {total > 0 && (
-          <div className="nav" aria-hidden>
-            <button type="button" onClick={prev} aria-label="Anterior"><ChevronLeft size={18} aria-hidden /></button>
-            <button type="button" onClick={next} aria-label="Próximo"><ChevronRight size={18} aria-hidden /></button>
+        {isLoading && (
+          <div className="carousel__skeleton" aria-hidden>
+            <div className="carousel__skeleton-line" />
+            <div className="carousel__skeleton-line" />
           </div>
         )}
+
+        {items.map((item, index) => {
+          const isActive = index === currentIndex;
+          const title = item.title || item.image_name || 'Obra sem título';
+          const safeUrl = getSafeImageUrl(item.image_url, placeholderImages[0]?.image_url ?? '');
+          return (
+            <figure
+              key={item.id ?? `${title}-${index}`}
+              className={`carousel__slide ${isActive ? 'is-active' : ''}`.trim()}
+              aria-hidden={!isActive}
+            >
+              <img
+                className="carousel__media"
+                src={safeUrl}
+                srcSet={`${safeUrl} 1x, ${safeUrl} 2x`}
+                sizes="(max-width: 680px) 100vw, 640px"
+                alt={`${title} · por ${item.author}`}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+              <figcaption className="carousel__caption" aria-live={isActive ? 'polite' : 'off'} aria-atomic="true">
+                <div className="carousel__caption-inner">
+                  <p className="carousel__title">{title}</p>
+                  <ArtistBadge name={item.author} />
+                </div>
+              </figcaption>
+            </figure>
+          );
+        })}
+
+        {total > 1 && (
+          <>
+            <button type="button" className="carousel__arrow carousel__arrow--prev" onClick={prev} aria-label="Ver slide anterior">
+              <ChevronLeft aria-hidden />
+            </button>
+            <button type="button" className="carousel__arrow carousel__arrow--next" onClick={next} aria-label="Ver próximo slide">
+              <ChevronRight aria-hidden />
+            </button>
+          </>
+        )}
+
         {showIndicators && total > 1 && (
-          <div className="indicators" role="tablist" aria-label="Slides">
-            {images.map((_, i) => (
+          <div className="carousel__indicators" role="tablist" aria-label="Indicadores de slides">
+            {items.map((_, index) => (
               <button
-                key={i}
+                key={`dot-${index}`}
                 type="button"
+                className={`carousel__dot ${index === currentIndex ? 'is-active' : ''}`.trim()}
                 role="tab"
-                aria-selected={i === idx}
-                aria-label={`Ir para slide ${i + 1}`}
-                className={`dot ${i === idx ? 'is-active' : ''}`.trim()}
-                onClick={() => setIdx(i)}
+                aria-selected={index === currentIndex}
+                aria-label={`Ir para o slide ${index + 1}`}
+                onClick={() => goTo(index)}
               />
             ))}
+          </div>
+        )}
+
+        {total > 1 && (
+          <div
+            className="carousel__progress"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(progress * 100)}
+            aria-hidden={false}
+          >
+            <span style={{ transform: `scaleX(${progress})` }} />
           </div>
         )}
       </div>
