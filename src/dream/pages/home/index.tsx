@@ -11,12 +11,12 @@ const highlights = [
     {
         title: 'Compartilhe Seu Universo',
         description: 'Envie suas criações, receba feedback acolhedor e contribua para uma vitrine colaborativa.',
-        action: { href: '/envie', label: 'Enviar arte' }
+    action: { href: '/criar?tab=enviar', label: 'Enviar arte' }
     },
     {
         title: 'Aprenda com a Comunidade',
         description: 'Acesse dicas criativas, guias e valores que reforçam um ambiente gentil e seguro.',
-        action: { href: '/core-values', label: 'Conheça os valores' }
+        action: { href: '/sobre', label: 'Conheça os valores' }
     }
 ];
 
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
                     </p>
                     <div className="home-hero__actions">
                         <Link className="dm-button" to="/explorar">Começar a explorar</Link>
-                        <Link className="dm-button dm-button--ghost" to="/regras">Regras da comunidade</Link>
+                        <Link className="dm-button dm-button--ghost" to="/comunidade?tab=regras">Regras da comunidade</Link>
                     </div>
                 </div>
 
@@ -44,8 +44,8 @@ const Home: React.FC = () => {
                 {highlights.map((item) => (
                     <CardDream key={item.title}>
                         <h3>{item.title}</h3>
-                        <p style={{ color: 'var(--muted)' }}>{item.description}</p>
-                        <div className="home-hero__actions" style={{ marginTop: 16 }}>
+                        <p className="text-muted">{item.description}</p>
+                        <div className="home-hero__actions mt-16">
                             <Link className="dm-button dm-button--ghost" to={item.action.href}>{item.action.label}</Link>
                         </div>
                     </CardDream>
@@ -59,9 +59,9 @@ const Home: React.FC = () => {
                         Publique suas obras, inspire outras pessoas e acompanhe as novidades da plataforma. Nosso time segue
                         aprimorando a experiência para você criar com tranquilidade.
                     </p>
-                    <div className="home-hero__actions" style={{ justifyContent: 'center', marginTop: 20 }}>
-                        <Link className="dm-button" to="/envie">Envie sua arte</Link>
-                        <Link className="dm-button dm-button--ghost" to="/ajuda">Precisa de ajuda?</Link>
+                    <div className="home-hero__actions mt-20 justify-center">
+                        <Link className="dm-button" to="/criar?tab=enviar">Envie sua arte</Link>
+                        <Link className="dm-button dm-button--ghost" to="/comunidade?tab=ajuda">Precisa de ajuda?</Link>
                     </div>
                 </CardDream>
             </section>

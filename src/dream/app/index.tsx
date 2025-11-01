@@ -1,6 +1,25 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import logoUrl from '../styles/logo.svg';
+
+function setFavicon() {
+  try {
+    const linkId = 'app-favicon';
+    let link = document.querySelector<HTMLLinkElement>(`link#${linkId}`);
+    if (!link) {
+      link = document.createElement('link');
+      link.id = linkId;
+      link.rel = 'icon';
+      link.type = 'image/svg+xml';
+      document.head.appendChild(link);
+    }
+    link.href = logoUrl;
+  } catch (e) {
+    // non-blocking
+    console.warn('[favicon] failed to set', e);
+  }
+}
 
 function startMockingIfEnabled() {
   try {
@@ -26,6 +45,7 @@ function main() {
       <App />
     </React.StrictMode>
   );
+  setFavicon();
   startMockingIfEnabled();
 }
 

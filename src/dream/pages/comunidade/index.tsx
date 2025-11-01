@@ -1,75 +1,45 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import CardDream from '../../components/CardDream';
 import { faq } from '../../content/faq';
+import { useSyncedTab } from '../../shared/hooks/useSyncedTab';
+import { Tabs } from '../../shared/components/Tabs';
 
 type Tab = 'ajuda' | 'regras';
 
 const Comunidade: React.FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const getInitialTab = (): Tab => {
-    const params = new URLSearchParams(location.search);
-    const t = params.get('tab');
-    return (t === 'regras' ? 'regras' : 'ajuda');
-  };
-
-  const [tab, setTab] = React.useState<Tab>(getInitialTab);
-
-  React.useEffect(() => {
-    setTab(getInitialTab());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
-
-  const handleTab = (next: Tab) => {
-    setTab(next);
-    const params = new URLSearchParams(location.search);
-    params.set('tab', next);
-    navigate({ pathname: '/comunidade', search: `?${params.toString()}` }, { replace: true });
-  };
+  const { tab, setTab } = useSyncedTab<Tab>({ values: ['ajuda', 'regras'], defaultValue: 'ajuda', basePath: '/comunidade' });
 
   return (
     <div className="page-container">
       <h1>Comunidade</h1>
 
-      <CardDream style={{ marginTop: 12 }}>
+      <CardDream className="mt-12">
         <p>Encontre ajuda e conheça as regras da comunidade.</p>
-
-        <div role="tablist" aria-label="Seções da comunidade" style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
-          <button
-            role="tab"
-            aria-selected={tab === 'ajuda'}
-            className={`dm-button ${tab === 'ajuda' ? '' : 'dm-button--ghost'}`.trim()}
-            onClick={() => handleTab('ajuda')}
-          >
-            Ajuda
-          </button>
-          <button
-            role="tab"
-            aria-selected={tab === 'regras'}
-            className={`dm-button ${tab === 'regras' ? '' : 'dm-button--ghost'}`.trim()}
-            onClick={() => handleTab('regras')}
-          >
-            Regras
-          </button>
-        </div>
+        <Tabs<Tab>
+          aria-label="Seções da comunidade"
+          items={[
+            { id: 'ajuda', label: 'Ajuda' },
+            { id: 'regras', label: 'Regras' },
+          ]}
+          active={tab}
+          onChange={setTab}
+        />
       </CardDream>
 
       {tab === 'ajuda' && (
-        <div style={{ marginTop: 16 }}>
+        <div className="mt-16">
           <CardDream>
             <strong>Precisa de suporte?</strong>
-            <p style={{ marginTop: 6 }}>
+            <p className="mt-8">
               Escreva para <a href="mailto:angelolealpl14@gmail.com">angelolealpl14@gmail.com</a>.
             </p>
           </CardDream>
 
-          <div style={{ marginTop: 16 }}>
+          <div className="mt-16">
             {faq.map((item, idx) => (
-              <CardDream key={idx} style={{ marginBottom: 12 }}>
+              <CardDream key={idx} className="mt-12">
                 <strong>{item.q}</strong>
-                <p style={{ color: 'var(--muted)', marginTop: 6 }}>{item.a}</p>
+                <p className="text-muted mt-8">{item.a}</p>
               </CardDream>
             ))}
           </div>
@@ -77,7 +47,7 @@ const Comunidade: React.FC = () => {
       )}
 
       {tab === 'regras' && (
-        <div style={{ marginTop: 16 }}>
+        <div className="mt-16">
           <CardDream>
             <h2>Regras de Convivência</h2>
             <ul style={{ marginTop: 8 }}>

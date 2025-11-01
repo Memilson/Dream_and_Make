@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
+import logoUrl from './styles/logo.svg';
 
 // Navegação principal simplificada: Explorar | Criar | Comunidade | Sobre
 type NavChild = { to: string; label: string };
@@ -38,7 +39,7 @@ export const PageShell: React.FC = () => {
       <header className="site-header" role="banner">
         <div className="header-inner">
           <NavLink to="/" className="logo">
-            <img src="/styles/logo.svg" className="logo-img" alt="" aria-hidden />
+            <img src={logoUrl} className="logo-img" alt="" aria-hidden />
             Dream and Make
           </NavLink>
           <button
