@@ -1,0 +1,34 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dream and Make logo" shape-rendering="geometricPrecision">
+  <defs>
+    <linearGradient id="dm-green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#72B48F"/>
+      <stop offset="100%" stop-color="#61A57E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fundo transparente; use #1a1a1a no contêiner da página se quiser fundo escuro -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Aro / círculo externo (sonho) - mais encorpado -->
+    <circle cx="128" cy="128" r="100" stroke="url(#dm-green)" stroke-width="14"/>
+
+    <!-- Estrela maior (inspiração) -->
+    <!-- Centro ~ (128,92); raio externo ~22 e interno ~9 -->
+    <polygon fill="url(#dm-green)" stroke="none"
+      points="
+        128,70
+        133.29,84.719
+        148.923,85.202
+        136.56,94.781
+        140.931,109.798
+        128,101
+        115.069,109.798
+        119.44,94.781
+        107.077,85.202
+        122.71,84.719
+      " />
+
+    <!-- Triângulo maior (ação) - traço grosso e cantos arredondados -->
+    <path d="M128 140 L84 200 L172 200 Z"
+          stroke="url(#dm-green)" stroke-width="16" fill="none"/>
+  </g>
+</svg>

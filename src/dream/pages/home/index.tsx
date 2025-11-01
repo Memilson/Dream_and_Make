@@ -37,18 +37,7 @@ const Home: React.FC = () => {
                     </div>
                 </div>
 
-                <CardDream className="home-hero__card">
-                    <h3>Curadoria que inspira</h3>
-                    <p style={{ color: 'var(--muted)', marginTop: 8 }}>
-                        Projetamos um ambiente fluido, responsivo e com visual minimalista para que você navegue com leveza.
-                        Aproveite a nova experiência redesenhada, otimizada para qualquer dispositivo.
-                    </p>
-                    <ul style={{ marginTop: 16 }}>
-                        <li>Layout responsivo com navegação intuitiva</li>
-                        <li>Cartões com mais profundidade e leitura confortável</li>
-                        <li>Transições sutis que mantêm o foco no conteúdo</li>
-                    </ul>
-                </CardDream>
+                {/* Card removido a pedido do usuário */}
             </section>
 
             <section className="home-grid">

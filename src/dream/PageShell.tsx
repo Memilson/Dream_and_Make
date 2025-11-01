@@ -1,19 +1,39 @@
 import React from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 
-const links = [
-  { to: '/explorar', label: 'Explorar' },
-  { to: '/galeria', label: 'Galeria' },
-  { to: '/musicas', label: 'Músicas' },
-  { to: '/envie', label: 'Envie sua arte' },
-  { to: '/faq', label: 'FAQ' },
-  { to: '/ajuda', label: 'Ajuda' },
-  { to: '/core-values', label: 'Core Values' },
-  { to: '/crie-voce', label: 'Crie Você' },
-  { to: '/sobre', label: 'Sobre Nós' },
-  { to: '/regras', label: 'Regras' },
-  { to: '/changelog', label: 'Atualizações' }
-];
+// Navegação principal simplificada: Explorar | Criar | Comunidade | Sobre
+const navGroups = [
+  {
+    to: '/explorar',
+    label: 'Explorar',
+    children: [
+      { to: '/explorar/galeria', label: 'Galeria' },
+      { to: '/explorar/musicas', label: 'Músicas' },
+    ],
+  },
+  {
+    to: '/criar',
+    label: 'Criar',
+    children: [
+      { to: '/criar/enviar', label: 'Enviar' },
+    ],
+  },
+  {
+    to: '/comunidade',
+    label: 'Comunidade',
+    children: [
+      { to: '/comunidade/ajuda', label: 'Ajuda' },
+      { to: '/comunidade/regras', label: 'Regras' },
+    ],
+  },
+  {
+    to: '/sobre',
+    label: 'Sobre',
+    children: [
+      { to: '/sobre', label: 'Origem' },
+    ],
+  },
+] as const;
 
 export const PageShell: React.FC = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -45,10 +65,24 @@ export const PageShell: React.FC = () => {
             role="navigation"
             aria-label="Principal"
           >
-            {links.map((link) => (
-              <NavLink key={link.to} to={link.to} onClick={handleNavigate}>
-                {link.label}
-              </NavLink>
+            {navGroups.map((group) => (
+              <div className="nav-item" key={group.to}>
+                <NavLink className="nav-link" to={group.to} onClick={handleNavigate} aria-haspopup="true">
+                  {group.label}
+                </NavLink>
+                <div className="submenu" role="menu">
+                  {group.children.map((child) => (
+                    <NavLink
+                      key={child.to}
+                      to={child.to}
+                      onClick={handleNavigate}
+                      role="menuitem"
+                    >
+                      {child.label}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
         </div>

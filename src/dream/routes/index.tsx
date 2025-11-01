@@ -6,14 +6,12 @@ const Landing = lazy(() => import('../pages/home'));
 const Explorar = lazy(() => import('../pages/explorar'));
 const Galeria = lazy(() => import('../pages/galeria'));
 const Musicas = lazy(() => import('../pages/musicas'));
+const Criar = lazy(() => import('../pages/criar'));
 const Envie = lazy(() => import('../pages/envie'));
-const FAQ = lazy(() => import('../pages/faq'));
+const Comunidade = lazy(() => import('../pages/comunidade'));
 const Ajuda = lazy(() => import('../pages/ajuda'));
-const CoreValues = lazy(() => import('../pages/core-values'));
-const CrieVoce = lazy(() => import('../pages/crie-voce'));
-const Sobre = lazy(() => import('../pages/sobre'));
-const Changelog = lazy(() => import('../pages/changelog'));
 const Regras = lazy(() => import('../pages/regras'));
+const Sobre = lazy(() => import('../pages/sobre'));
 const NotFound = lazy(() => import('../pages/not-found'));
 
 const AppRoutes: React.FC = () => {
@@ -22,18 +20,45 @@ const AppRoutes: React.FC = () => {
             <Routes>
                 <Route element={<PageShell /> }>
                     <Route index element={<Landing />} />
-                    <Route path="/explorar" element={<Explorar />} />
-                    <Route path="/galeria" element={<Galeria />} />
-                    <Route path="/musicas" element={<Musicas />} />
-                    <Route path="/envie" element={<Envie />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/ajuda" element={<Ajuda />} />
-                    <Route path="/core-values" element={<CoreValues />} />
-                    <Route path="/crie-voce" element={<CrieVoce />} />
-                    <Route path="/sobre" element={<Sobre />} />
-                    <Route path="/changelog" element={<Changelog />} />
-                    <Route path="/regras" element={<Regras />} />
-                    <Route path="/home" element={<Navigate to="/" replace />} />
+
+                    {/* Explorar */}
+                    <Route path="explorar">
+                        <Route index element={<Explorar />} />
+                        <Route path="galeria" element={<Galeria />} />
+                        <Route path="musicas" element={<Musicas />} />
+                    </Route>
+
+                    {/* Criar */}
+                    <Route path="criar">
+                        <Route index element={<Criar />} />
+                        <Route path="enviar" element={<Envie />} />
+                    </Route>
+
+                    {/* Comunidade */}
+                    <Route path="comunidade">
+                        <Route index element={<Comunidade />} />
+                        <Route path="ajuda" element={<Ajuda />} />
+                        <Route path="regras" element={<Regras />} />
+                    </Route>
+
+                    {/* Sobre */}
+                    <Route path="sobre">
+                        <Route index element={<Sobre />} />
+                        <Route path="origem" element={<Sobre />} />
+                    </Route>
+
+                    {/* Redirects from legacy paths */}
+                    <Route path="galeria" element={<Navigate to="/explorar/galeria" replace />} />
+                    <Route path="musicas" element={<Navigate to="/explorar/musicas" replace />} />
+                    <Route path="envie" element={<Navigate to="/criar/enviar" replace />} />
+                    <Route path="crie-voce" element={<Navigate to="/criar" replace />} />
+                    <Route path="core-values" element={<Navigate to="/sobre" replace />} />
+                    <Route path="ajuda" element={<Navigate to="/comunidade/ajuda" replace />} />
+                    <Route path="regras" element={<Navigate to="/comunidade/regras" replace />} />
+                    <Route path="faq" element={<Navigate to="/comunidade/ajuda" replace />} />
+                    <Route path="changelog" element={<Navigate to="/sobre" replace />} />
+
+                    <Route path="home" element={<Navigate to="/" replace />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>

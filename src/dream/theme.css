@@ -217,10 +217,45 @@ button { cursor: pointer; border: 0; font: inherit; }
     transform: none;
   }
 
-  .nav a {
+  .nav a,
+  .nav .nav-link {
     padding: 8px 12px;
     color: var(--text);
   }
+
+  /* Dropdowns (desktop) */
+  .nav-item { position: relative; }
+  .submenu {
+    position: absolute;
+    /* Remove the vertical gap so the hover doesn't break when moving the mouse
+       from the parent link to the submenu */
+    top: 100%;
+    left: 0;
+    display: none;
+    min-width: 200px;
+    /* keep inner spacing inside the panel rather than as an external gap */
+    padding: 10px;
+    border-radius: 14px;
+    background: var(--surface-strong);
+    border: 1px solid var(--outline);
+    box-shadow: var(--shadow);
+    z-index: 20;
+  }
+  .submenu a {
+    display: block;
+    color: var(--muted);
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
+  .submenu a:hover,
+  .submenu a:focus,
+  .submenu a[aria-current="page"] {
+    color: var(--text);
+    background: rgba(114, 180, 143, 0.08);
+    border: 1px solid rgba(114, 180, 143, 0.25);
+  }
+  .nav-item:hover .submenu,
+  .nav-item:focus-within .submenu { display: block; }
 }
 
 /* Main area */
@@ -327,6 +362,13 @@ button { cursor: pointer; border: 0; font: inherit; }
   color: var(--primary);
   border-color: rgba(114, 180, 143, 0.6);
   background: rgba(114, 180, 143, 0.08);
+}
+
+/* Submenu layout when mobile menu is open */
+@media (max-width: 899px) {
+  .nav .nav-item { display: grid; gap: 8px; }
+  .nav .submenu { position: static; display: grid; gap: 6px; background: transparent; border: 0; box-shadow: none; padding: 0 0 8px; }
+  .nav .submenu a { padding: 8px 12px; color: var(--muted); }
 }
 
 .site-footer {
