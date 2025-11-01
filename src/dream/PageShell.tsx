@@ -1,31 +1,16 @@
 import React from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
+import { Compass, Upload, Users, Info } from 'lucide-react';
 import logoUrl from './styles/logo.svg';
 
 // Navegação principal simplificada: Explorar | Criar | Comunidade | Sobre
 type NavChild = { to: string; label: string };
-type NavGroup = { to: string; label: string; children: NavChild[] };
+type NavGroup = { to: string; label: string; icon: React.ComponentType<{ className?: string }>; children: NavChild[] };
 const navGroups: NavGroup[] = [
-  {
-    to: '/explorar',
-    label: 'Explorar',
-    children: [],
-  },
-  {
-    to: '/criar',
-    label: 'Criar',
-    children: [],
-  },
-  {
-    to: '/comunidade',
-    label: 'Comunidade',
-    children: [],
-  },
-  {
-    to: '/sobre',
-    label: 'Sobre',
-    children: [],
-  },
+  { to: '/explorar', label: 'Explorar', icon: Compass, children: [] },
+  { to: '/criar', label: 'Criar', icon: Upload, children: [] },
+  { to: '/comunidade', label: 'Comunidade', icon: Users, children: [] },
+  { to: '/sobre', label: 'Sobre', icon: Info, children: [] },
 ];
 
 export const PageShell: React.FC = () => {
@@ -53,32 +38,20 @@ export const PageShell: React.FC = () => {
             <span />
             <span />
           </button>
-          <nav
-            className={`nav ${menuOpen ? 'is-open' : ''}`.trim()}
-            role="navigation"
-            aria-label="Principal"
-          >
-            {navGroups.map((group) => (
-              <div className="nav-item" key={group.to}>
-                <NavLink className="nav-link" to={group.to} onClick={handleNavigate} aria-haspopup={group.children.length > 0 || undefined}>
-                  {group.label}
-                </NavLink>
-                {group.children.length > 0 && (
-                  <div className="submenu" role="menu">
-                    {group.children.map((child) => (
-                      <NavLink
-                        key={child.to}
-                        to={child.to}
-                        onClick={handleNavigate}
-                        role="menuitem"
-                      >
-                        {child.label}
-                      </NavLink>
-                    ))}
+          <nav className={`nav nav--segmented ${menuOpen ? 'is-open' : ''}`.trim()} role="navigation" aria-label="Principal">
+            <div className="nav-rail">
+              {navGroups.map((group) => {
+                const Icon = group.icon;
+                return (
+                  <div className="nav-item" key={group.to}>
+                    <NavLink className="nav-link" to={group.to} onClick={handleNavigate} aria-haspopup={group.children.length > 0 || undefined}>
+                      <Icon className="nav-icon" aria-hidden />
+                      <span>{group.label}</span>
+                    </NavLink>
                   </div>
-                )}
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </nav>
         </div>
       </header>
