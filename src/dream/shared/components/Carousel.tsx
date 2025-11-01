@@ -9,10 +9,19 @@ interface CarouselProps {
   autoMs?: number;
   className?: string;
   count?: number; // how many images to load
-  maxHeight?: number | string; // clamp height to avoid obstructing layout
+  maxHeight?: number; // px
+  minHeight?: number; // px
+  maxWidth?: number;  // px
 }
 
-const Carousel: React.FC<CarouselProps> = ({ autoMs = 4500, className = '', count = 5, maxHeight = 'min(52vh, 520px)' }) => {
+const Carousel: React.FC<CarouselProps> = ({
+  autoMs = 4500,
+  className = '',
+  count = 5,
+  maxHeight = 520,
+  minHeight = 260,
+  maxWidth = 560,
+}) => {
   const { data: fetched = [], isLoading, isError } = useQuery({
     queryKey: ['carousel-images', count],
     queryFn: async () => {
@@ -40,13 +49,18 @@ const Carousel: React.FC<CarouselProps> = ({ autoMs = 4500, className = '', coun
   const prev = () => setIdx((i) => (i - 1 + total) % total);
   const next = () => setIdx((i) => (i + 1) % total);
 
-  const currentRatio = dims[idx] ? `${dims[idx].w} / ${dims[idx].h}` : undefined;
-
-  const maxH = typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight;
   return (
     <div className={`carousel ${className}`.trim()} aria-roledescription="carousel">
-      <div className="viewport ratio-16x9" style={{ aspectRatio: currentRatio, maxHeight: maxH }}>
-  {(isLoading && !images.length) && <div className="skeleton" style={{ width: '100%', height: '100%' }} />}
+      <div
+        className="viewport"
+        style={{
+          height: `clamp(${minHeight}px, 45vh, ${maxHeight}px)`,
+          maxWidth: `${maxWidth}px`,
+          width: '100%',
+          marginInline: 'auto',
+        }}
+      >
+        {(isLoading && !images.length) && <div className="skeleton" style={{ width: '100%', height: '100%' }} />}
         {images.map((img, i) => (
           <figure key={img.id} className={`slide ${i === idx ? 'is-active' : ''}`.trim()} aria-hidden={i !== idx}>
             <img
