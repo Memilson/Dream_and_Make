@@ -23,7 +23,8 @@
   /* Background accents (minimal, subtle) */
   --bg-accent: rgba(123, 214, 163, 0.08);
   --bg-spot: rgba(123, 214, 163, 0.12);
-  --bg-grid: rgba(255, 255, 255, 0.04);
+  /* Grid lines are disabled by default to avoid visible seams; enable via [data-bg-grid="on"] */
+  --bg-grid: transparent;
 
   /* Decorative strength toggle (1 = default, 0.6 = low) */
   --bg-decor-strength: 1;
@@ -57,7 +58,7 @@
   /* Light mode background accents tuned down */
   --bg-accent: rgba(47, 143, 91, 0.06);
   --bg-spot: rgba(47, 143, 91, 0.10);
-  --bg-grid: rgba(0, 0, 0, 0.06);
+  --bg-grid: transparent;
 }
 
 /* Reset + base */
@@ -71,6 +72,7 @@ body {
     radial-gradient(900px 600px at 85% -10%, var(--bg-accent), transparent 55%),
     linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)),
     var(--bg);
+  background-repeat: no-repeat; /* prevent any gradient tiling */
   color: var(--text);
   font-family: var(--font);
   line-height: 1.65;
@@ -136,7 +138,10 @@ body::after {
 body::before {
   opacity: calc(0.06 * var(--bg-decor-strength));
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 240px 240px;
+  /* noise covers the whole viewport and doesn't tile */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
   mix-blend-mode: soft-light;
 }
 
@@ -147,7 +152,9 @@ body::after {
     linear-gradient(0deg, transparent 0 49%, var(--bg-grid) 49% 51%, transparent 51%),
     linear-gradient(90deg, transparent 0 49%, var(--bg-grid) 49% 51%, transparent 51%);
   background-size: auto, 44px 44px, 44px 44px;
+  background-repeat: no-repeat;
   opacity: calc(0.08 * var(--bg-decor-strength));
+  will-change: opacity, transform; /* helps prevent subpixel seams on some GPUs */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -266,6 +273,10 @@ body::after {
   <html data-bg-decor="low"> ...
 */
 [data-bg-decor="low"] { --bg-decor-strength: 0.6; }
+
+/* Optional: turn on the background grid if desired */
+[data-bg-grid="on"] { --bg-grid: rgba(255, 255, 255, 0.04); }
+[data-theme='light'][data-bg-grid="on"] { --bg-grid: rgba(0, 0, 0, 0.06); }
 
 /* Header */
 .site-header {
