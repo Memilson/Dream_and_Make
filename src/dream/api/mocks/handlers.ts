@@ -1,9 +1,16 @@
 import { http, HttpResponse } from 'msw';
+// Local placeholder images for layout testing
+// Vite will transform these imports into public URLs
+import imgA from '../../styles/placeholders/images.jpg';
+import imgB from '../../styles/placeholders/images (1).jpg';
+import imgC from '../../styles/placeholders/kit_sol_e_lua_pinturas_oleo_sobre_tela_1407_3_29f2d57549f2e690932bf5d07049ef91.jpg';
+import imgD from '../../styles/placeholders/monalisa.jpg';
 
 const seedImages = [
-  { id: 1, author: 'Ana', image_url: 'https://picsum.photos/id/1018/1000/600', image_name: 'Montanha', created_at: new Date().toISOString() },
-  { id: 2, author: 'Bruno', image_url: 'https://picsum.photos/id/1025/1000/600', image_name: 'Cão', created_at: new Date().toISOString() },
-  { id: 3, author: 'Clara', image_url: 'https://picsum.photos/id/1035/1000/600', image_name: 'Cidade', created_at: new Date().toISOString() },
+  { id: 1, author: 'Ana', image_url: imgA, image_name: 'Montanha', created_at: new Date().toISOString() },
+  { id: 2, author: 'Bruno', image_url: imgB, image_name: 'Cão', created_at: new Date().toISOString() },
+  { id: 3, author: 'Clara', image_url: imgC, image_name: 'Cidade', created_at: new Date().toISOString() },
+  { id: 4, author: 'Diego', image_url: imgD, image_name: 'Retrato', created_at: new Date().toISOString() },
 ];
 
 const authorPool = ['Ana','Bruno','Clara','Diego','Eva','Felipe','Gabi','Hiro','Isabel','João','Kai','Lia','Maya','Nico','Olivia','Paulo','Quinn','Rafa','Sora','Téo'];
@@ -58,6 +65,12 @@ export const handlers = [
     const limit = Math.max(1, Math.min(Number(url.searchParams.get('limit') || '20'), 60));
     if (page > 0) {
       const startId = page * 1000;
+      // For the first paginated page, include the local seed images first
+      if (page === 1) {
+        const remaining = Math.max(0, limit - seedImages.length);
+        const generated = Array.from({ length: remaining }, (_, i) => makeImage(startId + i));
+        return HttpResponse.json([...seedImages, ...generated]);
+      }
       const items = Array.from({ length: limit }, (_, i) => makeImage(startId + i));
       return HttpResponse.json(items);
     }

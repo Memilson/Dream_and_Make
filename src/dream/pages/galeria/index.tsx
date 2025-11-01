@@ -3,6 +3,7 @@ import CardDream from '../../components/CardDream';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { get } from '../../api/http';
 import { ImageSchema, type Image } from '../../api/types';
+import { placeholderImages, expandPlaceholders } from '../../api/placeholders';
 import { RefreshCw, Image as ImageIcon, User, Shuffle } from 'lucide-react';
 
 const Galeria: React.FC = () => {
@@ -30,9 +31,15 @@ const Galeria: React.FC = () => {
     },
     getNextPageParam: (last) => last.nextPage,
     initialPageParam: 1,
+    retry: false,
   });
 
-  const items: Image[] = React.useMemo(() => feed?.pages.flatMap((p: any) => p.items) ?? [], [feed]);
+  const items: Image[] = React.useMemo(() => {
+    const list = feed?.pages.flatMap((p: any) => p.items) ?? [];
+    if (list.length > 0) return list;
+    // Fallback to many placeholders so masonry shows variety
+    return expandPlaceholders(24);
+  }, [feed]);
 
   const sentinelRef = React.useRef<HTMLDivElement | null>(null);
   React.useEffect(() => {
@@ -51,8 +58,12 @@ const Galeria: React.FC = () => {
   // Lucky set
   const [luckySet, setLuckySet] = React.useState<Image[]>([]);
   const onLucky = async () => {
-    const lucky = await get(`/images?luck=6`, ImageSchema.array());
-    setLuckySet(lucky);
+    try {
+      const lucky = await get(`/images?luck=6`, ImageSchema.array());
+      setLuckySet(lucky);
+    } catch {
+      setLuckySet(placeholderImages);
+    }
   };
 
   return (
