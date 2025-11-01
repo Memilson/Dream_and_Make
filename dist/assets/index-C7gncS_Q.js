@@ -1,1 +1,0 @@
-import{j as a}from"./index-CU8U4uaJ.js";const l=()=>a.jsxs("div",{className:"page-container",children:[a.jsx("h1",{children:"Ajuda"}),a.jsxs("p",{style:{marginTop:8},children:["Precisa de suporte? Escreva para"," ",a.jsx("a",{href:"mailto:angelolealpl14@gmail.com",children:"angelolealpl14@gmail.com"}),"."]})]});export{l as default};
