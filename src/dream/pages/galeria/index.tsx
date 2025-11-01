@@ -95,6 +95,16 @@ const Galeria: React.FC = () => {
         </div>
       </CardDream>
 
+      <CardDream className="gallery-card">
+        <header className="gallery-card__header">
+          <strong>De artistas que você segue</strong>
+        </header>
+        <div className="gallery-random">
+          {/* Placeholder utilizando parte do feed enquanto a lista de seguidos não existe */}
+          <ExploreGrid images={items.slice(0, 8)} isLoading={isLoading && items.length === 0} skeletonCount={4} showArtistOnHover />
+        </div>
+      </CardDream>
+
       <section className="gallery-feed" aria-label="Grade de obras">
         <ExploreGrid
           images={displayItems}

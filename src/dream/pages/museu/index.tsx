@@ -8,47 +8,53 @@ const MuseuPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder de login – integrar com auth quando estiver pronto
-    setMsg('Em breve: seu museu pessoal. Por enquanto, este login é ilustrativo.');
+    setMsg('Em breve: seu museu pessoal. Este formulário é ilustrativo.');
   };
 
   return (
-    <div className="page-container">
-      <div className="card-dream">
-        <div className="page-intro" style={{ marginBottom: 12 }}>
+    <div className="auth-page center" style={{ minHeight: '70vh' }}>
+      <div className="auth-card card-dream" style={{ width: 'min(420px, 92vw)' }}>
+        <div className="page-intro" style={{ marginBottom: 10 }}>
           <span className="eyebrow">Acesse seu espaço</span>
-          <h1 className="page-title">Meu museu</h1>
+          <h1 className="page-title" style={{ fontSize: '1.8rem' }}>Meu museu</h1>
           <p className="tagline">Guarde obras favoritas, rascunhos e inspirações em um só lugar.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid-auto-fit" style={{ gap: 16 }}>
+        <form onSubmit={handleSubmit} className="auth-form" style={{ display: 'grid', gap: 14 }}>
           <label style={{ display: 'grid', gap: 6 }}>
             <span>Email</span>
             <input
+              className="dm-input"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="voce@exemplo.com"
-              style={{ padding: '12px 14px', borderRadius: 12, border: '1px solid var(--outline)', background: 'var(--surface-strong)', color: 'var(--text)' }}
             />
           </label>
           <label style={{ display: 'grid', gap: 6 }}>
             <span>Senha</span>
             <input
+              className="dm-input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="••••••••"
-              style={{ padding: '12px 14px', borderRadius: 12, border: '1px solid var(--outline)', background: 'var(--surface-strong)', color: 'var(--text)' }}
             />
           </label>
-          <div style={{ display: 'flex', gap: 12, marginTop: 6 }}>
-            <button className="dm-button" type="submit">Entrar</button>
-            <Link className="dm-button dm-button--ghost" to="/comunidade?tab=ajuda">Criar conta</Link>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label style={{ display: 'inline-flex', gap: 8, alignItems: 'center', fontSize: '.95rem', color: 'var(--muted)' }}>
+              <input type="checkbox" aria-label="Lembrar de mim" />
+              Lembrar de mim
+            </label>
+            <Link className="dm-button dm-button--ghost" to="/comunidade?tab=ajuda">Esqueci a senha</Link>
           </div>
-          {msg && <p className="text-muted" style={{ marginTop: 8 }}>{msg}</p>}
+          <button className="dm-button" type="submit" style={{ width: '100%' }}>Entrar</button>
+          <p className="text-muted" style={{ textAlign: 'center' }}>
+            Não tem conta? <Link className="dm-button dm-button--ghost" to="/comunidade?tab=ajuda">Criar conta</Link>
+          </p>
+          {msg && <p className="text-muted" style={{ marginTop: 4 }}>{msg}</p>}
         </form>
       </div>
     </div>

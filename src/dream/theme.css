@@ -838,6 +838,20 @@ ul {
 .tablist { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .tab-icon { width: 16px; height: 16px; }
 
+/* Compact segmented tabs */
+.tablist.tabs--compact .dm-button {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.tablist.tabs--compact .dm-button.dm-button--ghost {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+}
+.tablist.tabs--compact .dm-button:not(.dm-button--ghost) {
+  background: var(--cta);
+}
+
 /* FAQ styles */
 .faq-list { display: grid; gap: 12px; }
 .faq-q { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
@@ -1096,7 +1110,10 @@ ul {
 .gallery-highlight { display: grid; gap: 20px; }
 .gallery-highlight__skeleton .skeleton { height: clamp(200px, 40vh, 320px); }
 .gallery-highlight__skeleton .skeleton-line { width: 60%; }
-.gallery-highlight__image { margin: 0; }
+.gallery-highlight__image { margin: 0; max-height: clamp(260px, 52vh, 560px); }
+.gallery-highlight__image .image-card { height: 100%; }
+.gallery-highlight__image .image-card__media { height: 100%; }
+.gallery-highlight__image .image-card__media img { height: 100%; object-fit: cover; }
 .gallery-highlight__meta {
   display: flex;
   flex-wrap: wrap;

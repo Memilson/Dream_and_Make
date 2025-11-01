@@ -15,6 +15,7 @@ const Explorar: React.FC = () => {
         <h1>Explorar</h1>
         <Tabs<Tab>
           aria-label="Explorar opções"
+          className="tabs--compact"
           items={[
             { id: 'galeria', label: 'Galeria' },
             { id: 'musicas', label: 'Músicas' },
