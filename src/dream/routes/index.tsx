@@ -9,6 +9,7 @@ const Criar = lazy(() => import('../pages/criar'));
 const Comunidade = lazy(() => import('../pages/comunidade'));
 const Sobre = lazy(() => import('../pages/sobre'));
 const NotFound = lazy(() => import('../pages/not-found'));
+const Museu = lazy(() => import('../pages/museu'));
 
 const AppRoutes: React.FC = () => {
     return (
@@ -31,6 +32,11 @@ const AppRoutes: React.FC = () => {
                     {/* Comunidade - visão unificada com tabs */}
                     <Route path="comunidade">
                         <Route index element={<Comunidade />} />
+                    </Route>
+
+                    {/* Meu museu (login/coleções pessoais) */}
+                    <Route path="museu">
+                        <Route index element={<Museu />} />
                     </Route>
 
                     {/* Sobre */}

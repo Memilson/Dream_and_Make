@@ -22,15 +22,31 @@ const highlights = [
 ];
 
 const Home: React.FC = () => {
+    const [heroIndex, setHeroIndex] = React.useState(0);
+
+    const heroPhrases = [
+        { line1: 'Encontre sua próxima', line2: 'ideia para criar hoje' },
+        { line1: 'Descubra artistas e', line2: 'guarde suas inspirações' },
+        { line1: 'Compartilhe seu', line2: 'processo e bastidores' },
+        { line1: 'Apoie quem te inspira com', line2: 'gestos simples e gentis' },
+    ];
+
     return (
         <div className="home">
             <section className="home-hero">
-                <div className="home-hero__text">
+                <div className="home-hero__text hero-lead text-shield">
                     <span className="eyebrow">Arte que pulsa, vozes em destaque</span>
-                    <h1 className="page-title">Dream and Make</h1>
-                    <p className="tagline">
+                    <h1 className="page-title hero-title">Dream and Make</h1>
+                    <p className="tagline hero-tagline">
                         Um espaço para descobrir talentos, apoiar artistas e compartilhar o que te move.
                     </p>
+                    <div className="hero-phrases" aria-live="polite">
+                        <h2 className="hero-phrase">
+                            {heroPhrases[heroIndex].line1}
+                            <br />
+                            <span className="hero-accent">{heroPhrases[heroIndex].line2}</span>
+                        </h2>
+                    </div>
                     <div className="home-hero__actions">
                         <Link className="dm-button" to="/explorar">Começar a explorar</Link>
                         <Link className="dm-button dm-button--ghost" to="/comunidade?tab=regras">Regras da casa</Link>
@@ -39,7 +55,7 @@ const Home: React.FC = () => {
 
                 {/* Novo carrossel de destaques */}
                 <div className="home-hero__card">
-                    <Carousel />
+                    <Carousel count={4} autoMs={6000} onIndexChange={setHeroIndex} />
                 </div>
             </section>
 

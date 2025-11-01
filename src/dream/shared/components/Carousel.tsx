@@ -9,6 +9,7 @@ interface CarouselProps extends UseCarouselOptions {
   className?: string;
   showIndicators?: boolean;
   ariaLabel?: string;
+  onIndexChange?: (index: number) => void;
 }
 
 const Carousel: React.FC<CarouselProps> = ({
@@ -17,6 +18,7 @@ const Carousel: React.FC<CarouselProps> = ({
   count,
   showIndicators = true,
   ariaLabel = 'Carrossel de destaques',
+  onIndexChange,
 }) => {
   const {
     items,
@@ -30,6 +32,12 @@ const Carousel: React.FC<CarouselProps> = ({
     pause,
     resume,
   } = useCarousel({ autoMs, count });
+  // Notify parent when slide changes (for synced hero text)
+  React.useEffect(() => {
+    if (typeof onIndexChange === 'function') {
+      onIndexChange(currentIndex);
+    }
+  }, [currentIndex, onIndexChange]);
 
   const total = items.length;
 

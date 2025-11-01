@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
-import { Compass, Upload, Users, Info } from 'lucide-react';
+import { Compass, Upload, Users, Info, User } from 'lucide-react';
 import logoUrl from './styles/logo.svg';
 
 // Navegação principal simplificada: Explorar | Criar | Comunidade | Sobre
@@ -11,6 +11,7 @@ const navGroups: NavGroup[] = [
   { to: '/criar', label: 'Criar', icon: Upload, children: [] },
   { to: '/comunidade', label: 'Comunidade', icon: Users, children: [] },
   { to: '/sobre', label: 'Sobre', icon: Info, children: [] },
+  { to: '/museu', label: 'Meu museu', icon: User, children: [] },
 ];
 
 export const PageShell: React.FC = () => {
