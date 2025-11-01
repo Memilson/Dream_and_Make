@@ -5,23 +5,21 @@ import CardDream from '../../components/CardDream';
 const Changelog: React.FC = () => {
   return (
     <div className="page-container">
-      <h1>Changelog</h1>
-      <div style={{ marginTop: 12 }}>
-        {changelog.versions.map(v => (
-          <CardDream key={v.version} style={{ marginBottom: 12 }}>
-            <h3>{v.version}</h3>
-            <ul style={{ marginTop: 8 }}>
-              {v.items.map((it, i) => <li key={i}>{it}</li>)}
-            </ul>
-          </CardDream>
-        ))}
-        <CardDream>
-          <h3>Backlog</h3>
-          <ul style={{ marginTop: 8 }}>
-            {changelog.backlog.map((it, i) => <li key={i}>{it}</li>)}
-          </ul>
-        </CardDream>
-      </div>
+      <CardDream>
+        <h1>Atualizações</h1>
+        <p style={{ color: 'var(--muted)', marginTop: 12 }}>{changelog.message}</p>
+      </CardDream>
+
+      <CardDream>
+        <h2>O que vem por aí</h2>
+        <p style={{ color: 'var(--muted)', marginTop: 8 }}>
+          Nosso roadmap continua em evolução. Veja algumas das iniciativas que já estamos desenvolvendo para turbinar a
+          plataforma:
+        </p>
+        <ul style={{ marginTop: 16 }}>
+          {changelog.backlog.map((it, i) => <li key={i}>{it}</li>)}
+        </ul>
+      </CardDream>
     </div>
   );
 };
