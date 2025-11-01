@@ -1,0 +1,1 @@
+import{j as e}from"./index-CU8U4uaJ.js";const t=()=>e.jsxs("div",{style:{textAlign:"center",marginTop:"50px"},children:[e.jsx("h1",{children:"404 - Not Found"}),e.jsx("p",{children:"The page you are looking for does not exist."})]});export{t as default};

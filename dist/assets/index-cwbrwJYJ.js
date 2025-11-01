@@ -1,0 +1,1 @@
+import{j as e}from"./index-CU8U4uaJ.js";const s=()=>e.jsxs("div",{className:"page-container",children:[e.jsx("h1",{children:"Core Values"}),e.jsx("p",{style:{marginTop:8},children:"Em breve: grade responsiva com bordas verdes."})]});export{s as default};

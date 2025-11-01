@@ -1,0 +1,1 @@
+import{j as e}from"./index-CU8U4uaJ.js";import{C as r}from"./CardDream-a_5u-6kR.js";const a=()=>e.jsx("div",{className:"center",style:{padding:24},children:e.jsxs(r,{style:{maxWidth:800,width:"100%"},children:[e.jsx("h1",{children:"Envie sua arte"}),e.jsx("p",{children:"Em breve: formulário de upload de imagem + contato."})]})});export{a as default};

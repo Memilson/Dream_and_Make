@@ -1,0 +1,1 @@
+import{j as r}from"./index-CU8U4uaJ.js";import{C as a}from"./CardDream-a_5u-6kR.js";const i=()=>r.jsxs("div",{className:"page-container",children:[r.jsx("h1",{children:"Galeria"}),r.jsx(a,{style:{marginTop:12},children:r.jsx("p",{children:"Em breve: carrosséis por artista e modal de imagens."})})]});export{i as default};

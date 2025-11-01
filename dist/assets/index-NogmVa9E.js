@@ -1,0 +1,1 @@
+import{j as r}from"./index-CU8U4uaJ.js";import{C as e}from"./CardDream-a_5u-6kR.js";const t=()=>r.jsx("div",{className:"center",children:r.jsxs(e,{style:{maxWidth:800,width:"100%"},children:[r.jsx("h1",{children:"Explorar"}),r.jsx("p",{children:"Em breve: obra aleatória, comentários e troca de imagem."})]})});export{t as default};
