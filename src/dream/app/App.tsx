@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppRoutes from '../routes/index';
 import '../../dream/theme.css';
-import { ThemeProvider } from './providers/ThemeProvider';
+import { ThemeProvider } from './ThemeProvider';
 
 const queryClient = new QueryClient();
 
