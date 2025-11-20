@@ -1,17 +1,7 @@
 import { http, HttpResponse } from 'msw';
-// Local placeholder images for layout testing
-// Vite will transform these imports into public URLs
-import imgA from '../../styles/placeholders/images.jpg';
-import imgB from '../../styles/placeholders/images (1).jpg';
-import imgC from '../../styles/placeholders/kit_sol_e_lua_pinturas_oleo_sobre_tela_1407_3_29f2d57549f2e690932bf5d07049ef91.jpg';
-import imgD from '../../styles/placeholders/monalisa.jpg';
+import { placeholderImages } from '../placeholders';
 
-const seedImages = [
-  { id: 1, author: 'Ana', image_url: imgA, image_name: 'Montanha', created_at: new Date().toISOString() },
-  { id: 2, author: 'Bruno', image_url: imgB, image_name: 'Cão', created_at: new Date().toISOString() },
-  { id: 3, author: 'Clara', image_url: imgC, image_name: 'Cidade', created_at: new Date().toISOString() },
-  { id: 4, author: 'Diego', image_url: imgD, image_name: 'Retrato', created_at: new Date().toISOString() },
-];
+const seedImages = placeholderImages;
 
 const authorPool = ['Ana','Bruno','Clara','Diego','Eva','Felipe','Gabi','Hiro','Isabel','João','Kai','Lia','Maya','Nico','Olivia','Paulo','Quinn','Rafa','Sora','Téo'];
 
